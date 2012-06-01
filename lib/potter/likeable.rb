@@ -22,6 +22,10 @@ module Potter
         raise ArgumentError, "#{liker} is not a liker!" unless liker.is_liker?
         !self.likings.where(:liker_type => liker.class.to_s, :liker_id => liker.id).empty?
       end
+      
+       def likes_count #user.likes.count(object)
+         self.likings.count
+      end
 
       def likers(klass)
         klass = klass.to_s.singularize.camelize.constantize unless klass.is_a?(Class)

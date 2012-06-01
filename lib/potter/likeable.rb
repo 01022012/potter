@@ -25,7 +25,7 @@ module Potter
       
       def likes_count #n likes / n likings * 100%
         likes = self.likings.where(:dislike => false).count
-        unless likes.empty?
+        if likes != 0
          percent_likes = likes / self.likings.count * 100
          percent_likes.to_f
         else

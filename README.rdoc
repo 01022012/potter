@@ -1,6 +1,6 @@
 = potter
 
-Description goes here.
+An attempt to DRY out Planify
 
 == Contributing to potter
  

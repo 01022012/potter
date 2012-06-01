@@ -27,7 +27,11 @@ module Potter
       def unlike!(likeable)
         ll = likeable.likings.where(:liker_type => self.class.to_s, :liker_id => self.id)
         unless ll.empty?
-          ll.each { |l| l.destroy }
+          #ll.each { |l| l.destroy }
+          ll.each { |l| 
+                    l.like => 0
+                    l.save 
+                  }
         else
           raise ActiveRecord::RecordNotFound
         end
@@ -36,6 +40,20 @@ module Potter
       def likes?(likeable)
         ensure_likeable!(likeable)
         !self.likes.where(:likeable_type => likeable.class.to_s, :likeable_id => likeable.id).empty?
+      end
+      
+      # Toggles a {LikeStore like} relationship.
+      #
+      # @param [Likeable] likeable the object to like/unlike.
+      # @return [Boolean]
+      def toggle_like!(likeable)
+        if likes?(likeable)
+          unlike!(likeable)
+          false
+        else
+          like!(likeable)
+          true
+        end
       end
 
       def likees(klass)

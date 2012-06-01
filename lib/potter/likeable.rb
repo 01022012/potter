@@ -23,8 +23,10 @@ module Potter
         !self.likings.where(:liker_type => liker.class.to_s, :liker_id => liker.id).empty?
       end
       
-       def likes_count #user.likes.count(object)
-         self.likings.count
+       def likes_count #n likes / n likings * 100%
+         likes = self.likings.where(:like => 1).count
+         percent_likes = likes / self.likings.count * 100
+         percent_likes.to_f
       end
 
       def likers(klass)

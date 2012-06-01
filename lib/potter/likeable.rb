@@ -29,7 +29,8 @@ module Potter
          percent_likes = likes / self.likings.count * 100
          percent_likes.to_f
         else
-         raise ActiveRecord::RecordNotFound
+         "Not liked yet!"
+        end 
       end
 
       def likers(klass)

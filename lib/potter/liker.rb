@@ -29,7 +29,7 @@ module Potter
         unless ll.empty?
           #ll.each { |l| l.destroy }
           ll.each { |l| 
-                    l.like => 0
+                    l.like = 0
                     l.save 
                   }
         else

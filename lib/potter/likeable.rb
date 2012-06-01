@@ -23,10 +23,13 @@ module Potter
         !self.likings.where(:liker_type => liker.class.to_s, :liker_id => liker.id).empty?
       end
       
-       def likes_count #n likes / n likings * 100%
-         likes = self.likings.where(:dislike => false).count
+      def likes_count #n likes / n likings * 100%
+        likes = self.likings.where(:dislike => false).count
+        unless likes.empty?
          percent_likes = likes / self.likings.count * 100
          percent_likes.to_f
+        else
+         raise ActiveRecord::RecordNotFound
       end
 
       def likers(klass)

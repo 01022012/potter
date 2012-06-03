@@ -8,6 +8,8 @@ module Potter
 
       validates_uniqueness_of :likeable_type, :scope => [:likeable_id, :liker_type, :liker_id], :message => 'You cannot like the same thing twice.'
 
+      likeable_type.valid? # => false
+      likeable_type.errors
       def self.human_attribute_name(*args); ''; end
     end
   end

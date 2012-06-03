@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-%w{likeable liker like_store photographable photographer photograph_store}.each do |f|
+%w{likeable liker like_store photographable photographer photograph_store planable planer plan_store}.each do |f|
   require "#{File.dirname(__FILE__)}/#{f}"
 end
 
@@ -33,6 +33,19 @@ module Potter
 
       def acts_as_photograph_store(opts = nil)
         include Potter::PhotographStore
+      end
+      
+      ## Plans
+      def acts_as_planer(opts = nil)
+        include Potter::Planer
+      end
+
+      def acts_as_planable(opts = nil)
+        include Potter::Planable
+      end
+
+      def acts_as_plan_store(opts = nil)
+        include Potter::PlanStore
       end
     end
   end

@@ -27,7 +27,17 @@ module Potter
       def dislike!(likeable)
         ensure_likeable!(likeable)
         raise ArgumentError, "#{self} cannot like itself!" unless self != likeable
-        Like.create!({ :liker => self, :likeable => likeable, :dislike=>true }, :without_protection => true)       
+        ll = likeable.likings.where(:liker_type => self.class.to_s, :liker_id => self.id)
+        unless ll.empty?
+          #ll.each { |l| l.destroy }
+          ll.each { |l| 
+                    l.dislike = true
+                    l.save 
+                  }
+        else
+          Like.create!({ :liker => self, :likeable => likeable, :dislike=>true }, :without_protection => true)     
+        end
+          
       end
 
       def unlike!(likeable)

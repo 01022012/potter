@@ -17,10 +17,10 @@ module Potter
       def is_planer?
         true
       end
-
+#,  :name, :zone, :address, :city, :description, :discount, :reservation_option, :done, :event_date, :removed
       def plan!(planable)
         ensure_planable!(planable)
-        Plan.create!({ :planer => self, :planable => planable,  :name, :zone, :address, :city, :description, :discount, :reservation_option, :done, :event_date, :removed }, :without_protection => true)
+        Plan.create!({ :planer => self, :planable => planable }, :without_protection => true)
       end
 
       def unplan!(planable)

@@ -23,6 +23,14 @@ module Potter
         raise ArgumentError, "#{self} cannot like itself!" unless self != likeable
         Like.create!({ :liker => self, :likeable => likeable }, :without_protection => true)
       end
+      
+      def dislike!(likeable)
+        ensure_likeable!(likeable)
+        raise ArgumentError, "#{self} cannot like itself!" unless self != likeable
+        disliked=Like.create!({ :liker => self, :likeable => likeable }, :without_protection => true)
+        disliked.update_attribute(dislike,true)
+        
+      end
 
       def unlike!(likeable)
         ll = likeable.likings.where(:liker_type => self.class.to_s, :liker_id => self.id)
@@ -39,7 +47,7 @@ module Potter
 
       def likes?(likeable)
         ensure_likeable!(likeable)
-        !self.likes.where(:likeable_type => likeable.class.to_s, :likeable_id => likeable.id).empty?
+        !self.likes.where(:likeable_type => likeable.class.to_s, :likeable_id => likeable.id, :dislike => false).empty?
       end
       
       # Toggles a {LikeStore like} relationship.
